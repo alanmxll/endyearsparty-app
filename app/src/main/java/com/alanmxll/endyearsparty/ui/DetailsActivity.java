@@ -24,6 +24,8 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
         this.mViewHolder.checkParticipate = findViewById(R.id.check_participate);
         this.mViewHolder.checkParticipate.setOnClickListener(this);
+
+        this.loadDataFromActivity();
     }
 
     @Override
@@ -33,6 +35,18 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 this.mSecurityPreferences.storeString(EndYearConstants.PRESENCE_KEY, EndYearConstants.CONFIRMATION_YES);
             } else {
                 this.mSecurityPreferences.storeString(EndYearConstants.PRESENCE_KEY, EndYearConstants.CONFIRMATION_NO);
+            }
+        }
+    }
+
+    private void loadDataFromActivity() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String presence = extras.getString(EndYearConstants.PRESENCE_KEY);
+            if (presence != null && presence.equals(EndYearConstants.CONFIRMATION_YES)) {
+                this.mViewHolder.checkParticipate.setChecked(true);
+            } else {
+                this.mViewHolder.checkParticipate.setChecked(false);
             }
         }
     }
